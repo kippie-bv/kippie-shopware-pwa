@@ -1,6 +1,6 @@
 {
   "name": "@kippie/shopware-pwa-ecommerce",
-  "version": "1.0.8",
+  "version": "1.0.7",
   "description": "A package that extends the shopware-pwa project with composables and helpers and some logic.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -12,7 +12,7 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "yarn build",
-    "prepublishOnly": "yarn test && yarn lint",
+    "prepublishOnly": "yarn lint",
     "preversion": "yarn lint",
     "version": "yarn format && git add -A src",
     "postversion": "git push && git push --tags"
