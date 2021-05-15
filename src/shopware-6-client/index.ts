@@ -27,7 +27,7 @@ const getShippingMethods = async (contextInstance = defaultInstance) => {
 
 const getStores = async (
   contextInstance = defaultInstance,
-  body: Object = {},
+  body: object = {},
 ) => {
   const resp = await contextInstance.invoke.post(indexStoresEndpoint(), body)
 
@@ -37,7 +37,7 @@ const getStores = async (
 const getStore = async (
   storeID: string,
   contextInstance = defaultInstance,
-  body: Object = {},
+  body: object = {},
 ) => {
   const resp = await contextInstance.invoke.post(
     getStoreEndpoint(storeID),
@@ -49,7 +49,7 @@ const getStore = async (
 
 const getExcludedProducts = async (
   contextInstance = defaultInstance,
-  body: Object = {},
+  body: object = {},
 ) => {
   const resp = await contextInstance.invoke.post(
     getExcludedProductsEndpoint(),
@@ -67,8 +67,8 @@ const saveStoreToCustomer = async (
   const resp = await contextInstance.invoke.post(
     saveStoreToCustomerEndpoint(),
     {
-      storeId: storeId,
-      customerId: customerId,
+      storeId,
+      customerId,
     },
   )
 

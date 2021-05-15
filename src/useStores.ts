@@ -1,5 +1,5 @@
 export declare interface Store {
-  active: Boolean
+  active: boolean
   addition: string | null
   apiAlias: string
   city: string
@@ -9,7 +9,7 @@ export declare interface Store {
   excludedProducts: Array<[]> | null
   houseNumber: number | null
   id: string
-  isPickup: Boolean
+  isPickup: boolean
   latitude: number | null
   longitude: number
   locationName: string | null
@@ -71,7 +71,7 @@ const useStores = (rootContext: any) => {
   const openTimes = computed(() => _storeOpenTimes.value)
 
   async function refreshStores(): Promise<void> {
-    loading.value = true
+    startLoading
     try {
       const result = await getStores(apiInstance)
       _storeStores.value = result.elements
@@ -79,12 +79,12 @@ const useStores = (rootContext: any) => {
       const err = e
       error.value = err.message
     } finally {
-      loading.value = false
+      stopLoading
     }
   }
 
   async function retrieveStore(id: string): Promise<void> {
-    loading.value = true
+    startLoading
     if (totalStores.value === 0) {
       try {
         const result = await getStore(id, apiInstance)
@@ -93,17 +93,17 @@ const useStores = (rootContext: any) => {
         const err = e
         error.value = err.message
       } finally {
-        loading.value = false
+        stopLoading
       }
     } else {
       try {
-        const store = _storeStores.value?.find((store) => store.id === id)
+        let store = _storeStores.value?.find((store) => store.id === id)
         _storeStore.value = store
       } catch (e) {
         const err = e
         error.value = err.message
       } finally {
-        loading.value = false
+        stopLoading
       }
     }
   }
@@ -112,7 +112,7 @@ const useStores = (rootContext: any) => {
     storeId: string,
     customerId: string,
   ): Promise<void> {
-    loading.value = true
+    startLoading
     try {
       saveStoreToCustomer(storeId, customerId, rootContext)
       _storeSelectedStore.value = storeId
@@ -120,12 +120,12 @@ const useStores = (rootContext: any) => {
       const err = e
       error.value = err.message
     } finally {
-      loading.value = false
+      stopLoading
     }
   }
 
   async function refreshExcludedProducts(): Promise<void> {
-    loading.value = true
+    startLoading
     try {
       const result = await getExcludedProducts(apiInstance)
       _storeExcludedProducts.value = result
@@ -133,7 +133,7 @@ const useStores = (rootContext: any) => {
       const err = e
       error.value = err.message
     } finally {
-      loading.value = false
+      stopLoading
     }
   }
 
