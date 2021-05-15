@@ -6,7 +6,7 @@ export declare interface Store {
   createdAt: string
   description: string | null
   email: string | null
-  excludedProducts: Array<[]> | null
+  excludedProducts: [] | null
   houseNumber: number | null
   id: string
   isPickup: boolean
@@ -14,12 +14,12 @@ export declare interface Store {
   longitude: number
   locationName: string | null
   name: string
-  openTimes: Array<[]> | null
+  openTimes: [] | null
   owner: string | null
   phone: string | null
   postCode: string | null
   street: string | null
-  translated: Array<[]> | null
+  translated: [] | null
   updatedAt: string | null
 }
 
@@ -39,8 +39,8 @@ const useStores = (rootContext: any) => {
   const loading = ref(false)
   const error = ref(null)
 
-  const startLoading = (loading.value = true)
-  const stopLoading = (loading.value = false)
+  const startLoading = () => (loading.value = true)
+  const stopLoading = () => (loading.value = false)
 
   const { apiInstance, contextName } = getApplicationContext(
     rootContext,
@@ -71,7 +71,7 @@ const useStores = (rootContext: any) => {
   const openTimes = computed(() => _storeOpenTimes.value)
 
   async function refreshStores(): Promise<void> {
-    startLoading
+    startLoading()
     try {
       const result = await getStores(apiInstance)
       _storeStores.value = result.elements
@@ -79,12 +79,12 @@ const useStores = (rootContext: any) => {
       const err = e
       error.value = err.message
     } finally {
-      stopLoading
+      stopLoading()
     }
   }
 
   async function retrieveStore(id: string): Promise<void> {
-    startLoading
+    startLoading()
     if (totalStores.value === 0) {
       try {
         const result = await getStore(id, apiInstance)
@@ -93,17 +93,17 @@ const useStores = (rootContext: any) => {
         const err = e
         error.value = err.message
       } finally {
-        stopLoading
+        stopLoading()
       }
     } else {
       try {
-        let store = _storeStores.value?.find((store) => store.id === id)
-        _storeStore.value = store
+        const result = _storeStores.value?.find((value) => value.id === id)
+        _storeStore.value = result
       } catch (e) {
         const err = e
         error.value = err.message
       } finally {
-        stopLoading
+        stopLoading()
       }
     }
   }
@@ -112,7 +112,7 @@ const useStores = (rootContext: any) => {
     storeId: string,
     customerId: string,
   ): Promise<void> {
-    startLoading
+    startLoading()
     try {
       saveStoreToCustomer(storeId, customerId, rootContext)
       _storeSelectedStore.value = storeId
@@ -120,12 +120,12 @@ const useStores = (rootContext: any) => {
       const err = e
       error.value = err.message
     } finally {
-      stopLoading
+      stopLoading()
     }
   }
 
   async function refreshExcludedProducts(): Promise<void> {
-    startLoading
+    startLoading()
     try {
       const result = await getExcludedProducts(apiInstance)
       _storeExcludedProducts.value = result
@@ -133,7 +133,7 @@ const useStores = (rootContext: any) => {
       const err = e
       error.value = err.message
     } finally {
-      stopLoading
+      stopLoading()
     }
   }
 
