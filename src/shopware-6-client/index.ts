@@ -3,12 +3,12 @@ import { createInstance } from '@shopware-pwa/shopware-6-client'
 const getPaymentMethodsEndpoint = () => `/store-api/v3/kpbv/payment-methods`
 const getShippingMethodsEndpoint = () => `/store-api/v3/kpbv/shipping-methods`
 const indexStoresEndpoint = () => `/store-api/kpbv/stores`
-const getStoreEndpoint = (storeID: String) =>
+const getStoreEndpoint = (storeID: string) =>
   `/store-api/kpbv/stores/${storeID}`
 const getExcludedProductsEndpoint = () =>
   `/store-api/kpbv/stores/excluded-products`
 const saveStoreToCustomerEndpoint = () => `/store-api/kpbv/customer/save/store`
-const getOpenTimesFromStoreEndpoint = (storeID: String) =>
+const getOpenTimesFromStoreEndpoint = (storeID: string) =>
   `/store-api/kpbv/opentimes/${storeID}`
 
 const defaultInstance = createInstance()
@@ -35,7 +35,7 @@ const getStores = async (
 }
 
 const getStore = async (
-  storeID: String,
+  storeID: string,
   contextInstance = defaultInstance,
   body: Object = {},
 ) => {
@@ -60,8 +60,8 @@ const getExcludedProducts = async (
 }
 
 const saveStoreToCustomer = async (
-  storeId: String,
-  customerId: String,
+  storeId: string,
+  customerId: string,
   contextInstance = defaultInstance,
 ) => {
   const resp = await contextInstance.invoke.post(
@@ -76,7 +76,7 @@ const saveStoreToCustomer = async (
 }
 
 const getOpenTimesFromStore = async (
-  storeId: String,
+  storeId: string,
   contextInstance = defaultInstance,
 ) => {
   const body = {

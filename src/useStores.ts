@@ -1,26 +1,26 @@
 export declare interface Store {
   active: Boolean
-  addition: String | null
-  apiAlias: String
-  city: String
-  createdAt: String
-  description: String | null
-  email: String | null
+  addition: string | null
+  apiAlias: string
+  city: string
+  createdAt: string
+  description: string | null
+  email: string | null
   excludedProducts: Array<[]> | null
   houseNumber: number | null
-  id: String
+  id: string
   isPickup: Boolean
   latitude: number | null
   longitude: number
-  locationName: String | null
-  name: String
+  locationName: string | null
+  name: string
   openTimes: Array<[]> | null
-  owner: String | null
-  phone: String | null
-  postCode: String | null
-  street: String | null
+  owner: string | null
+  phone: string | null
+  postCode: string | null
+  street: string | null
   translated: Array<[]> | null
-  updatedAt: String | null
+  updatedAt: string | null
 }
 
 import { ref, computed, WritableComputedRef, Ref } from '@vue/composition-api'
@@ -33,7 +33,6 @@ import {
   getStore,
   saveStoreToCustomer,
   getExcludedProducts,
-  getOpenTimesFromStore,
 } from './shopware-6-client'
 
 const useStores = (rootContext: any) => {
@@ -51,7 +50,7 @@ const useStores = (rootContext: any) => {
   const _storeStores: WritableComputedRef<Store[] | null> = sharedRef(
     `${contextName}-stores`,
   )
-  const _storeSelectedStore: WritableComputedRef<String | null> = sharedRef(
+  const _storeSelectedStore: WritableComputedRef<string | null> = sharedRef(
     `${contextName}-selected-store`,
   )
   const _storeStore: WritableComputedRef<Store | null | undefined> = sharedRef(
