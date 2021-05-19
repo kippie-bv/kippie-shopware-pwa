@@ -18,19 +18,19 @@ const useProductRecommendationModal = (rootContext: any) => {
   )
   const { sharedRef } = useSharedState(rootContext)
 
-  const _product: WritableComputedRef<Object | null | undefined> = sharedRef(
+  const _product: WritableComputedRef<object | null | undefined> = sharedRef(
     `${contextName}-modal-product`,
   )
 
-  const _depositProduct: WritableComputedRef<Object | null | undefined> =
+  const _depositProduct: WritableComputedRef<object | null | undefined> =
     sharedRef(`${contextName}-modal-deposit-product`)
 
-  const setProduct = (product: Product) => {
-    _product.value = product
+  const setProduct = (value: Product) => {
+    _product.value = value
   }
 
-  const setDepositProduct = (product: Product) => {
-    _depositProduct.value = product
+  const setDepositProduct = (value: Product) => {
+    _depositProduct.value = value
   }
 
   const product = computed(() => _product.value)
