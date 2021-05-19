@@ -482,6 +482,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@shopware-pwa/commons@^0.8.2":
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@shopware-pwa/commons/-/commons-0.8.2.tgz#4c9fe1422cc1ba0233ce996fa8243717d654479d"
+  integrity sha512-U+Ooay/Sfdfrz5W4aYpWrf3KkNLR1xl1Y3GZxQr1eYQb2iA43BQEAVfl2+hKFqWDmtBFzZ+PnSp+SsU9JWDlMQ==
+
 "@shopware-pwa/composables@^0.8.2":
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/@shopware-pwa/composables/-/composables-0.8.2.tgz#67a002276bfe2b162407e8e291c9569e3da0b28e"

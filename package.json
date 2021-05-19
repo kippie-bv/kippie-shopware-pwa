@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/meeshoogendoorn/kippie-shopware-pwa#readme",
   "dependencies": {
+    "@shopware-pwa/commons": "^0.8.2",
     "@shopware-pwa/composables": "^0.8.2",
     "@types/jest": "^26.0.23",
     "@vue/composition-api": "^1.0.0-rc.8",
