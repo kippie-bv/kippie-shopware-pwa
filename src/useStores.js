@@ -1,29 +1,4 @@
-export declare interface Store {
-  active: boolean
-  addition: string | null
-  apiAlias: string
-  city: string
-  createdAt: string
-  description: string | null
-  email: string | null
-  excludedProducts: [] | null
-  houseNumber: number | null
-  id: string
-  isPickup: boolean
-  latitude: number | null
-  longitude: number
-  locationName: string | null
-  name: string
-  openTimes: [] | null
-  owner: string | null
-  phone: string | null
-  postCode: string | null
-  street: string | null
-  translated: [] | null
-  updatedAt: string | null
-}
-
-import { ref, computed, WritableComputedRef, Ref } from '@vue/composition-api'
+import { ref, computed } from '@vue/composition-api'
 import {
   getApplicationContext,
   useSharedState,
@@ -35,7 +10,7 @@ import {
   getExcludedProducts,
 } from './shopware-6-client'
 
-const useStores = (rootContext: any) => {
+const useStores = (rootContext) => {
   const loading = ref(false)
   const error = ref(null)
 
@@ -47,21 +22,11 @@ const useStores = (rootContext: any) => {
     'useStores',
   )
   const { sharedRef } = useSharedState(rootContext)
-  const _storeStores: WritableComputedRef<Store[] | null> = sharedRef(
-    `${contextName}-stores`,
-  )
-  const _storeSelectedStore: WritableComputedRef<string | null> = sharedRef(
-    `${contextName}-selected-store`,
-  )
-  const _storeStore: WritableComputedRef<Store | null | undefined> = sharedRef(
-    `${contextName}-store`,
-  )
-  const _storeExcludedProducts: WritableComputedRef<any[] | null> = sharedRef(
-    `${contextName}-excluded-products`,
-  )
-  const _storeOpenTimes: WritableComputedRef<string[] | null> = sharedRef(
-    `${contextName}-open-times`,
-  )
+  const _storeStores = sharedRef(`${contextName}-stores`)
+  const _storeSelectedStore = sharedRef(`${contextName}-selected-store`)
+  const _storeStore = sharedRef(`${contextName}-store`)
+  const _storeExcludedProducts = sharedRef(`${contextName}-excluded-products`)
+  const _storeOpenTimes = sharedRef(`${contextName}-open-times`)
 
   const stores = computed(() => _storeStores.value)
   const store = computed(() => _storeStore.value)
@@ -70,7 +35,7 @@ const useStores = (rootContext: any) => {
   const excludedProducts = computed(() => _storeExcludedProducts.value)
   const openTimes = computed(() => _storeOpenTimes.value)
 
-  async function refreshStores(): Promise<void> {
+  async function refreshStores() {
     startLoading()
     try {
       const result = await getStores(apiInstance)
@@ -83,7 +48,7 @@ const useStores = (rootContext: any) => {
     }
   }
 
-  async function retrieveStore(id: string): Promise<void> {
+  async function retrieveStore(id) {
     startLoading()
     if (totalStores.value === 0) {
       try {
@@ -108,10 +73,7 @@ const useStores = (rootContext: any) => {
     }
   }
 
-  async function setStoreToCustomer(
-    storeId: string,
-    customerId: string,
-  ): Promise<void> {
+  async function setStoreToCustomer(storeId, customerId) {
     startLoading()
     try {
       saveStoreToCustomer(storeId, customerId, rootContext)
@@ -124,7 +86,7 @@ const useStores = (rootContext: any) => {
     }
   }
 
-  async function refreshExcludedProducts(): Promise<void> {
+  async function refreshExcludedProducts() {
     startLoading()
     try {
       const result = await getExcludedProducts(apiInstance)

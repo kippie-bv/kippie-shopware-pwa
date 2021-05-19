@@ -3,12 +3,11 @@ import { createInstance } from '@shopware-pwa/shopware-6-client'
 const getPaymentMethodsEndpoint = () => `/store-api/v3/kpbv/payment-methods`
 const getShippingMethodsEndpoint = () => `/store-api/v3/kpbv/shipping-methods`
 const indexStoresEndpoint = () => `/store-api/kpbv/stores`
-const getStoreEndpoint = (storeID: string) =>
-  `/store-api/kpbv/stores/${storeID}`
+const getStoreEndpoint = (storeID) => `/store-api/kpbv/stores/${storeID}`
 const getExcludedProductsEndpoint = () =>
   `/store-api/kpbv/stores/excluded-products`
 const saveStoreToCustomerEndpoint = () => `/store-api/kpbv/customer/save/store`
-const getOpenTimesFromStoreEndpoint = (storeID: string) =>
+const getOpenTimesFromStoreEndpoint = (storeID) =>
   `/store-api/kpbv/opentimes/${storeID}`
 
 const defaultInstance = createInstance()
@@ -25,19 +24,16 @@ const getShippingMethods = async (contextInstance = defaultInstance) => {
   return resp.data
 }
 
-const getStores = async (
-  contextInstance = defaultInstance,
-  body: object = {},
-) => {
+const getStores = async (contextInstance = defaultInstance, body = {}) => {
   const resp = await contextInstance.invoke.post(indexStoresEndpoint(), body)
 
   return resp.data
 }
 
 const getStore = async (
-  storeID: string,
+  storeID,
   contextInstance = defaultInstance,
-  body: object = {},
+  body = {},
 ) => {
   const resp = await contextInstance.invoke.post(
     getStoreEndpoint(storeID),
@@ -49,7 +45,7 @@ const getStore = async (
 
 const getExcludedProducts = async (
   contextInstance = defaultInstance,
-  body: object = {},
+  body = {},
 ) => {
   const resp = await contextInstance.invoke.post(
     getExcludedProductsEndpoint(),
@@ -60,8 +56,8 @@ const getExcludedProducts = async (
 }
 
 const saveStoreToCustomer = async (
-  storeId: string,
-  customerId: string,
+  storeId,
+  customerId,
   contextInstance = defaultInstance,
 ) => {
   const resp = await contextInstance.invoke.post(
@@ -76,7 +72,7 @@ const saveStoreToCustomer = async (
 }
 
 const getOpenTimesFromStore = async (
-  storeId: string,
+  storeId,
   contextInstance = defaultInstance,
 ) => {
   const body = {

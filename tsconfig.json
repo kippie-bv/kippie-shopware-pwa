@@ -5,8 +5,7 @@
     "declaration": true,
     "outDir": "./lib",
     "skipLibCheck": true,
-    "strict": true,
-    "typeRoots": ["node_modules/@types/"]
+    "strict": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "lib", "**/__tests__/*"]

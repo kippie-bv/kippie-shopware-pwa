@@ -1,6 +1,6 @@
 const generateShippingMethodsLabel = (
-  shippingMethodsFromProduct: any[],
-  shippingMethods: any[],
+  shippingMethodsFromProduct,
+  shippingMethods,
 ) => {
   if (shippingMethodsFromProduct === undefined) {
     return 'Niet Beschikbaar'
