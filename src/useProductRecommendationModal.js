@@ -4,7 +4,7 @@ import {
   getApplicationContext,
 } from '@shopware-pwa/composables'
 import { computed } from '@vue/composition-api'
-import PWAbundles from '/.shopware-pwa/pwa-bundles.json'
+import PWAbundles from '../../../../.shopware-pwa/pwa-bundles.json'
 
 const requiredDepositProducts =
   PWAbundles['kpbv-borg'].configuration.config.requiredDepositProducts
