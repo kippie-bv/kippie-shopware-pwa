@@ -11,7 +11,7 @@ const useProductRecommendationModal = (rootContext) => {
     'PRODUCT_RECOMMENDATION_MODAL_STATE',
   )
 
-  const { contextName } = getApplicationContext(
+  const { contextName, apiInstance } = getApplicationContext(
     rootContext,
     'useProductRecommendationModal',
   )
@@ -21,8 +21,9 @@ const useProductRecommendationModal = (rootContext) => {
 
   const _depositProduct = sharedRef(`${contextName}-modal-deposit-product`)
 
-  const setProduct = (value) => {
+  const setProduct = async (value) => {
     _product.value = value
+    await getDepositProduct()
   }
 
   const setDepositProduct = (value) => {
@@ -32,13 +33,30 @@ const useProductRecommendationModal = (rootContext) => {
   const product = computed(() => _product.value)
   const depositProduct = computed(() => _depositProduct.value)
 
+  const getDepositProduct = async () => {
+    console.log('depo', product)
+    const id = product.value.translated.customFields['borg_id']
+    const result = await apiInstance.invoke.post(`/store-api/product/${id}`, {})
+    setDepositProduct(result.data.product)
+  }
+
+  const closeModal = () => {
+    switchState(false)
+  }
+
+  const openModal = () => {
+    switchState(true)
+  }
+
   return {
     isOpen,
-    switchState,
     product,
     setProduct,
     depositProduct,
     setDepositProduct,
+    getDepositProduct,
+    closeModal,
+    openModal,
   }
 }
 
