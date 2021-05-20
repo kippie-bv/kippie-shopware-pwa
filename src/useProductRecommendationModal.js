@@ -4,11 +4,22 @@ import {
   getApplicationContext,
 } from '@shopware-pwa/composables'
 import { computed } from '@vue/composition-api'
+import PWAbundles from '/.shopware-pwa/pwa-bundles.json'
+
+const requiredDepositProducts =
+  PWAbundles['kpbv-borg'].configuration.config.requiredDepositProducts
+const optionalDepositProducts =
+  PWAbundles['kpbv-borg'].configuration.config.depositProducts
 
 const useProductRecommendationModal = (rootContext) => {
-  const { isOpen, switchState } = useUIState(
+  const { isOpen, switchState: switchModal } = useUIState(
     rootContext,
     'PRODUCT_RECOMMENDATION_MODAL_STATE',
+  )
+
+  const { isOpen: hasDeposit, switchState: switchDeposit } = useUIState(
+    rootContext,
+    'PRODUCT_RECOMMENDATION_MODAL_HAS_DEPOSIT_STATE',
   )
 
   const { contextName, apiInstance } = getApplicationContext(
@@ -21,8 +32,18 @@ const useProductRecommendationModal = (rootContext) => {
 
   const _depositProduct = sharedRef(`${contextName}-modal-deposit-product`)
 
-  const setProduct = async (value) => {
+  const productAddedToCart = async (value) => {
     _product.value = value
+    if (
+      optionalDepositProducts.includes(
+        _product.value.translated.customFields['borg_id'],
+      )
+    ) {
+      switchDeposit(true)
+    } else {
+      switchDeposit(false)
+    }
+    switchModal(true)
     await getDepositProduct()
   }
 
@@ -41,22 +62,25 @@ const useProductRecommendationModal = (rootContext) => {
   }
 
   const closeModal = () => {
-    switchState(false)
+    switchModal(false)
   }
 
   const openModal = () => {
-    switchState(true)
+    switchModal(true)
   }
 
   return {
     isOpen,
     product,
-    setProduct,
+    productAddedToCart,
     depositProduct,
     setDepositProduct,
     getDepositProduct,
     closeModal,
     openModal,
+    hasDeposit,
+    requiredDepositProducts,
+    optionalDepositProducts,
   }
 }
 
