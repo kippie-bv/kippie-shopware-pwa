@@ -1,5 +1,3 @@
-import { createInstance } from '@shopware-pwa/shopware-6-client'
-
 const getPaymentMethodsEndpoint = () => `/store-api/v3/kpbv/payment-methods`
 const getShippingMethodsEndpoint = () => `/store-api/v3/kpbv/shipping-methods`
 const indexStoresEndpoint = () => `/store-api/kpbv/stores`
@@ -10,31 +8,25 @@ const saveStoreToCustomerEndpoint = () => `/store-api/kpbv/customer/save/store`
 const getOpenTimesFromStoreEndpoint = (storeID) =>
   `/store-api/kpbv/opentimes/${storeID}`
 
-const defaultInstance = createInstance()
-
-const getPaymentMethods = async (contextInstance = defaultInstance) => {
-  const resp = await contextInstance.invoke.get(getPaymentMethodsEndpoint())
+const getPaymentMethods = async (contextInstance) => {
+  const resp = await contextInstance.invoke.get(getPaymentMethodsEndpoint)
 
   return resp.data
 }
 
-const getShippingMethods = async (contextInstance = defaultInstance) => {
-  const resp = await contextInstance.invoke.get(getShippingMethodsEndpoint())
+const getShippingMethods = async (contextInstance) => {
+  const resp = await contextInstance.invoke.get(getShippingMethodsEndpoint)
 
   return resp.data
 }
 
-const getStores = async (contextInstance = defaultInstance, body = {}) => {
+const getStores = async (contextInstance, body = {}) => {
   const resp = await contextInstance.invoke.post(indexStoresEndpoint(), body)
 
   return resp.data
 }
 
-const getStore = async (
-  storeID,
-  contextInstance = defaultInstance,
-  body = {},
-) => {
+const getStore = async (storeID, contextInstance, body = {}) => {
   const resp = await contextInstance.invoke.post(
     getStoreEndpoint(storeID),
     body,
@@ -43,38 +35,25 @@ const getStore = async (
   return resp.data
 }
 
-const getExcludedProducts = async (
-  contextInstance = defaultInstance,
-  body = {},
-) => {
+const getExcludedProducts = async (contextInstance, body = {}) => {
   const resp = await contextInstance.invoke.post(
-    getExcludedProductsEndpoint(),
+    getExcludedProductsEndpoint,
     body,
   )
 
   return resp.data
 }
 
-const saveStoreToCustomer = async (
-  storeId,
-  customerId,
-  contextInstance = defaultInstance,
-) => {
-  const resp = await contextInstance.invoke.post(
-    saveStoreToCustomerEndpoint(),
-    {
-      storeId,
-      customerId,
-    },
-  )
+const saveStoreToCustomer = async (storeId, customerId, contextInstance) => {
+  const resp = await contextInstance.invoke.post(saveStoreToCustomerEndpoint, {
+    storeId: storeId,
+    customerId: customerId,
+  })
 
   return resp.data
 }
 
-const getOpenTimesFromStore = async (
-  storeId,
-  contextInstance = defaultInstance,
-) => {
+const getOpenTimesFromStore = async (storeId, contextInstance) => {
   const body = {
     limit: 7,
     includes: {
