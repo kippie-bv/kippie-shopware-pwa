@@ -1,5 +1,5 @@
 import Cookie from 'cookie-universal'
-import { saveStoreToCustomer } from '@kippie/shopware-6-client'
+import { saveStoreToCustomer } from './../shopware-6-client'
 
 const $cookies = Cookie()
 
