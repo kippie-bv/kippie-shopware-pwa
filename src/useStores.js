@@ -2,6 +2,8 @@ import { ref, computed } from '@vue/composition-api'
 import {
   getApplicationContext,
   useSharedState,
+  useUser,
+  useIntercept,
 } from '@shopware-pwa/composables'
 import {
   getStores,
@@ -10,7 +12,10 @@ import {
   getExcludedProducts,
 } from './shopware-6-client'
 
+import { KIPPIE_INTERCEPTOR_KEYS } from './events'
+
 const useStores = (rootContext) => {
+  const SELECTED_STORE_COOKIE_KEY = 'sw-selected-store'
   const loading = ref(false)
   const error = ref(null)
 
@@ -21,6 +26,11 @@ const useStores = (rootContext) => {
     rootContext,
     'useStores',
   )
+
+  const { broadcast } = useIntercept(rootContext)
+
+  const { user, isLoggedIn } = useUser(rootContext)
+
   const { sharedRef } = useSharedState(rootContext)
   const _storeStores = sharedRef(`${contextName}-stores`)
   const _storeSelectedStore = sharedRef(`${contextName}-selected-store`)
@@ -30,7 +40,18 @@ const useStores = (rootContext) => {
 
   const stores = computed(() => _storeStores.value)
   const store = computed(() => _storeStore.value)
-  const selectedStore = computed(() => _storeSelectedStore.value)
+  const selectedStore = computed(() => {
+    if (_storeSelectedStore === null) {
+      if (!isLoggedIn) {
+        _storeSelectedStore.value = rootContext.$cookies.get(
+          SELECTED_STORE_COOKIE_KEY,
+        )
+      } else {
+        _storeSelectedStore.value = user.extensions.foreignKeys.store
+      }
+      return _storeSelectedStore.value
+    }
+  })
   const totalStores = computed(() => _storeStores.value?.length)
   const excludedProducts = computed(() => _storeExcludedProducts.value)
   const openTimes = computed(() => _storeOpenTimes.value)
@@ -73,11 +94,18 @@ const useStores = (rootContext) => {
     }
   }
 
-  async function setStoreToCustomer(storeId, customerId) {
+  async function setStoreToCustomer(storeId) {
     startLoading()
     try {
-      saveStoreToCustomer(storeId, customerId, apiInstance)
+      rootContext.$cookies.set(SELECTED_STORE_COOKIE_KEY, storeId)
+      if (isLoggedIn) {
+        saveStoreToCustomer(storeId, user.id, apiInstance)
+      }
       _storeSelectedStore.value = storeId
+      broadcast(KIPPIE_INTERCEPTOR_KEYS.ON_STORE_SELECTION_CHANGED, {
+        storeId: storeId,
+        userId: user.id,
+      })
     } catch (e) {
       const err = e
       error.value = err.message

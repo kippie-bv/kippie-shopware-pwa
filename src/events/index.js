@@ -3,6 +3,10 @@ import { saveStoreToCustomer } from '@kippie/shopware-6-client'
 
 const $cookies = Cookie()
 
+const KIPPIE_INTERCEPTOR_KEYS = {
+  ON_STORE_SELECTION_CHANGED: 'onStoreSelectionChanged',
+}
+
 const onStoreSelectionChanged = async (store, userContext, contextinstance) => {
   $cookies.set('sw-selected-store', store.id)
 
@@ -49,4 +53,5 @@ export {
   onStoreSelectionChanged,
   onUserLoginSetStore,
   onChangeShippingMethodOpenModal,
+  KIPPIE_INTERCEPTOR_KEYS,
 }

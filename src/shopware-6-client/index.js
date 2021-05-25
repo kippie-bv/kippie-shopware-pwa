@@ -9,13 +9,13 @@ const getOpenTimesFromStoreEndpoint = (storeID) =>
   `/store-api/kpbv/opentimes/${storeID}`
 
 const getPaymentMethods = async (contextInstance) => {
-  const resp = await contextInstance.invoke.get(getPaymentMethodsEndpoint)
+  const resp = await contextInstance.invoke.get(getPaymentMethodsEndpoint())
 
   return resp.data
 }
 
 const getShippingMethods = async (contextInstance) => {
-  const resp = await contextInstance.invoke.get(getShippingMethodsEndpoint)
+  const resp = await contextInstance.invoke.get(getShippingMethodsEndpoint())
 
   return resp.data
 }
@@ -37,7 +37,7 @@ const getStore = async (storeID, contextInstance, body = {}) => {
 
 const getExcludedProducts = async (contextInstance, body = {}) => {
   const resp = await contextInstance.invoke.post(
-    getExcludedProductsEndpoint,
+    getExcludedProductsEndpoint(),
     body,
   )
 
@@ -45,10 +45,13 @@ const getExcludedProducts = async (contextInstance, body = {}) => {
 }
 
 const saveStoreToCustomer = async (storeId, customerId, contextInstance) => {
-  const resp = await contextInstance.invoke.post(saveStoreToCustomerEndpoint, {
-    storeId: storeId,
-    customerId: customerId,
-  })
+  const resp = await contextInstance.invoke.post(
+    saveStoreToCustomerEndpoint(),
+    {
+      storeId: storeId,
+      customerId: customerId,
+    },
+  )
 
   return resp.data
 }
