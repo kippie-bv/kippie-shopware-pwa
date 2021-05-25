@@ -47,7 +47,7 @@ const useStores = (rootContext) => {
           SELECTED_STORE_COOKIE_KEY,
         )
       } else {
-        _storeSelectedStore.value = user.extensions.foreignKeys.store
+        _storeSelectedStore.value = user.value.extensions.foreignKeys.store
       }
     }
     return _storeSelectedStore.value
