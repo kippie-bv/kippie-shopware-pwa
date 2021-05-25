@@ -1,6 +1,6 @@
 {
   "name": "@kippie/shopware-pwa-ecommerce",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "description": "A package that extends the shopware-pwa project with composables and helpers and some logic.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
