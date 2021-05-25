@@ -42,16 +42,19 @@ const useStores = (rootContext) => {
   const store = computed(() => _storeStore.value)
   const selectedStore = computed(() => {
     if (_storeSelectedStore.value === null) {
-      if (!isLoggedIn) {
-        _storeSelectedStore.value = rootContext.$cookies.get(
-          SELECTED_STORE_COOKIE_KEY,
-        )
-      } else {
-        _storeSelectedStore.value = user.value.extensions.foreignKeys.store
+      if (isLoggedIn) {
+        if (user.value.extensions.foreignKeys.store) {
+          _storeSelectedStore.value = user.value.extensions.foreignKeys.store
+          return _storeSelectedStore.value
+        }
       }
     }
+    _storeSelectedStore.value = rootContext.$cookies.get(
+      SELECTED_STORE_COOKIE_KEY,
+    )
     return _storeSelectedStore.value
   })
+
   const totalStores = computed(() => _storeStores.value?.length)
   const excludedProducts = computed(() => _storeExcludedProducts.value)
   const openTimes = computed(() => _storeOpenTimes.value)
