@@ -76,7 +76,7 @@ const useStores = (rootContext) => {
   async function setStoreToCustomer(storeId, customerId) {
     startLoading()
     try {
-      saveStoreToCustomer(storeId, customerId, rootContext)
+      saveStoreToCustomer(storeId, customerId, apiInstance)
       _storeSelectedStore.value = storeId
     } catch (e) {
       const err = e
