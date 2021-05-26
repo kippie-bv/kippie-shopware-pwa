@@ -43,8 +43,8 @@ const useStores = (rootContext) => {
   const selectedStore = computed(() => {
     if (_storeSelectedStore.value === null) {
       if (isLoggedIn) {
-        if (user.value.extensions.foreignKeys.store) {
-          _storeSelectedStore.value = user.value.extensions.foreignKeys.store
+        if (user.value?.extensions?.foreignKeys.store) {
+          _storeSelectedStore.value = user.value?.extensions?.foreignKeys.store
           return _storeSelectedStore.value
         }
       }
