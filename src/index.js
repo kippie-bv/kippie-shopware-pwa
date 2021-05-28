@@ -1,5 +1,6 @@
 import { useStores } from './useStores'
 import { useExtendedCart } from './useExtendedCart'
-import { useProductRecommendationModal } from './useProductRecommendationModal'
+import { useDepositModal } from './useDepositModal'
+import { useModal } from './useModal'
 
-export { useStores, useExtendedCart, useProductRecommendationModal }
+export { useStores, useExtendedCart, useDepositModal, useModal }

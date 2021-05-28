@@ -1,9 +1,12 @@
 import {
   useUIState,
   useSharedState,
+  useProductAssociations,
+  useProduct,
+  useDefaults,
   getApplicationContext,
 } from '@shopware-pwa/composables'
-import { computed } from '@vue/composition-api'
+import { computed, watch } from '@vue/composition-api'
 import PWAbundles from '../../../../.shopware-pwa/pwa-bundles.json'
 
 const requiredDepositProducts =
@@ -11,7 +14,7 @@ const requiredDepositProducts =
 const optionalDepositProducts =
   PWAbundles['kpbv-borg'].configuration.config.depositProducts
 
-const useProductRecommendationModal = (rootContext) => {
+const useDepositModal = (rootContext) => {
   const { isOpen, switchState: switchModal } = useUIState(
     rootContext,
     'PRODUCT_RECOMMENDATION_MODAL_STATE',
@@ -26,6 +29,7 @@ const useProductRecommendationModal = (rootContext) => {
     rootContext,
     'useProductRecommendationModal',
   )
+
   const { sharedRef } = useSharedState(rootContext)
 
   const _product = sharedRef(`${contextName}-modal-product`)
@@ -33,7 +37,10 @@ const useProductRecommendationModal = (rootContext) => {
   const _depositProduct = sharedRef(`${contextName}-modal-deposit-product`)
 
   const productAddedToCart = async (value) => {
-    _product.value = value
+    const { product, loadAssociations } = useProduct(rootContext, value)
+    await loadAssociations()
+    _product.value = product.value
+    console.debug('product', product.value)
     if (
       optionalDepositProducts.includes(
         _product.value.translated.customFields['borg_id'],
@@ -84,4 +91,4 @@ const useProductRecommendationModal = (rootContext) => {
   }
 }
 
-export { useProductRecommendationModal }
+export { useDepositModal }
