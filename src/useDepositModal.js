@@ -1,9 +1,7 @@
 import {
   useUIState,
   useSharedState,
-  useProductAssociations,
   useProduct,
-  useDefaults,
   getApplicationContext,
 } from '@shopware-pwa/composables'
 import { computed, watch } from '@vue/composition-api'
