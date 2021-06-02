@@ -42,7 +42,6 @@ const useExtendedCart = (rootContext) => {
   })
 
   const getTotalPriceOfProductsExcludedDeposit = computed(() => {
-    console.log('ex0', productsExcludedDeposit)
     return productsExcludedDeposit.value.reduce((prev, cur) => {
       return prev + cur.price.totalPrice
     }, 0.0)
