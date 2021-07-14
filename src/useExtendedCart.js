@@ -22,7 +22,7 @@ const useExtendedCart = (rootContext) => {
 
   const totalDepositProducts = computed(() => {
     try {
-      depositProducts.value?.reduce((prev, cur) => {
+      return depositProducts.value.reduce((prev, cur) => {
         return prev + cur.quantity
       }, 0)
     } catch (e) {
@@ -33,7 +33,7 @@ const useExtendedCart = (rootContext) => {
 
   const totalDepositRelatedProducts = computed(() => {
     try {
-      return cart.value?.lineItems
+      return cart.value.lineItems
         .filter((lineItem) => lineItem.payload.productNumber.includes('KP-'))
         ?.reduce((prev, cur) => {
           return prev + cur.quantity
@@ -49,7 +49,7 @@ const useExtendedCart = (rootContext) => {
 
   const getTotalPriceOfProductsExcludedDeposit = computed(() => {
     try {
-      return productsExcludedDeposit.value?.reduce((prev, cur) => {
+      return productsExcludedDeposit.value.reduce((prev, cur) => {
         return prev + cur.price.totalPrice
       }, 0.0)
     } catch (e) {
