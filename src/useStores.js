@@ -10,6 +10,7 @@ import {
   getStore,
   saveStoreToCustomer,
   getExcludedProducts,
+  getOpenTimesFromStore,
 } from './shopware-6-client'
 
 import { KIPPIE_INTERCEPTOR_KEYS } from './events'
@@ -36,7 +37,6 @@ const useStores = (rootContext) => {
   const _storeSelectedStore = sharedRef(`${contextName}-selected-store`)
   const _storeStore = sharedRef(`${contextName}-store`)
   const _storeExcludedProducts = sharedRef(`${contextName}-excluded-products`)
-  const _storeOpenTimes = sharedRef(`${contextName}-open-times`)
 
   const stores = computed(() => _storeStores.value)
   const store = computed(() => _storeStore.value)
@@ -57,12 +57,15 @@ const useStores = (rootContext) => {
 
   const totalStores = computed(() => _storeStores.value?.length)
   const excludedProducts = computed(() => _storeExcludedProducts.value)
-  const openTimes = computed(() => _storeOpenTimes.value)
 
   async function refreshStores() {
     startLoading()
     try {
-      const result = await getStores(apiInstance)
+      const result = await getStores(apiInstance, {
+        associations: {
+          openTimes: [],
+        },
+      })
       _storeStores.value = result.elements
     } catch (e) {
       const err = e
@@ -74,26 +77,18 @@ const useStores = (rootContext) => {
 
   async function retrieveStore(id) {
     startLoading()
-    if (totalStores.value === 0) {
-      try {
-        const result = await getStore(id, apiInstance)
-        _storeStore.value = result
-      } catch (e) {
-        const err = e
-        error.value = err.message
-      } finally {
-        stopLoading()
-      }
-    } else {
-      try {
-        const result = _storeStores.value?.find((value) => value.id === id)
-        _storeStore.value = result
-      } catch (e) {
-        const err = e
-        error.value = err.message
-      } finally {
-        stopLoading()
-      }
+    try {
+      const result = await getStore(id, apiInstance, {
+        associations: {
+          openTimes: [],
+        },
+      })
+      _storeStore.value = result.elements[0]
+    } catch (e) {
+      const err = e
+      error.value = err.message
+    } finally {
+      stopLoading()
     }
   }
 
