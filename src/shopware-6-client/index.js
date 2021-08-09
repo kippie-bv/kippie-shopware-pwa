@@ -2,8 +2,8 @@ const getPaymentMethodsEndpoint = () => `/store-api/v3/kpbv/payment-methods`
 const getShippingMethodsEndpoint = () => `/store-api/v3/kpbv/shipping-methods`
 const indexStoresEndpoint = () => `/store-api/kpbv/stores`
 const getStoreEndpoint = (storeID) => `/store-api/kpbv/stores/${storeID}`
-const getExcludedProductsEndpoint = () =>
-  `/store-api/kpbv/stores/excluded-products`
+const getExcludedProductsEndpoint = (id) =>
+  `/store-api/kpbv/excluded-products/${id}`
 const saveStoreToCustomerEndpoint = () => `/store-api/kpbv/customer/save/store`
 const getOpenTimesFromStoreEndpoint = (storeID) =>
   `/store-api/kpbv/opentimes/${storeID}`
@@ -35,10 +35,9 @@ const getStore = async (storeID, contextInstance, body = {}) => {
   return resp.data
 }
 
-const getExcludedProducts = async (contextInstance, body = {}) => {
+const getExcludedProducts = async (contextInstance, id) => {
   const resp = await contextInstance.invoke.post(
-    getExcludedProductsEndpoint(),
-    body,
+    getExcludedProductsEndpoint(id),
   )
 
   return resp.data
