@@ -10,7 +10,6 @@ import {
   getStore,
   saveStoreToCustomer,
   getExcludedProducts,
-  getOpenTimesFromStore,
 } from './shopware-6-client'
 
 import { KIPPIE_INTERCEPTOR_KEYS } from './events'
@@ -97,12 +96,17 @@ const useStores = (rootContext) => {
     try {
       rootContext.$cookies.set(SELECTED_STORE_COOKIE_KEY, storeId)
       if (isLoggedIn) {
-        saveStoreToCustomer(storeId, user.id, apiInstance)
+        saveStoreToCustomer(
+          {
+            storeId: storeId,
+          },
+          apiInstance,
+        )
       }
       _storeSelectedStore.value = storeId
       broadcast(KIPPIE_INTERCEPTOR_KEYS.ON_STORE_SELECTION_CHANGED, {
         storeId: storeId,
-        userId: user.id,
+        cartId: cart.value.token,
       })
     } catch (e) {
       const err = e
