@@ -43,12 +43,11 @@ const getExcludedProducts = async (contextInstance, id) => {
   return resp.data
 }
 
-const saveStoreToCustomer = async (storeId, customerId, contextInstance) => {
+const saveStoreToCustomer = async (params = {}, contextInstance) => {
   const resp = await contextInstance.invoke.post(
     saveStoreToCustomerEndpoint(),
     {
-      storeId: storeId,
-      customerId: customerId,
+      ...params,
     },
   )
 
