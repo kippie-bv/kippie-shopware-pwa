@@ -7,12 +7,13 @@ import {
   getApplicationContext,
 } from '@shopware-pwa/composables'
 import { computed, ref, watch } from '@vue/composition-api'
-import PWAbundles from '../../../../.shopware-pwa/pwa-bundles.json'
+// import PWAbundles from '../../../../.shopware-pwa/pwa-bundles.json'
 
-const requiredDepositProducts =
-  PWAbundles['kpbv-borg'].configuration.config.requiredDepositProducts
-const optionalDepositProducts =
-  PWAbundles['kpbv-borg'].configuration.config.depositProducts
+const requiredDepositProducts = ['01c9a6215f324adfb57e238850c26821']
+const optionalDepositProducts = [
+  '7bd89b026b5642dda7ba8a27433dcec9',
+  '01489ce177b740799826fd118a272dfb',
+]
 
 const useDepositModal = (rootContext) => {
   const { cartItems, removeItem, refreshCart } = useCart(rootContext)
